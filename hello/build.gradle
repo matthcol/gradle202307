@@ -1,6 +1,9 @@
 plugins {
     // https://docs.gradle.org/current/userguide/java_plugin.html
     id 'java'
+
+    // https://plugins.gradle.org/plugin/io.freefair.lombok
+    id "io.freefair.lombok" version "8.1.0"
 }
 
 group = 'org.example'
@@ -11,8 +14,16 @@ repositories {
 }
 
 dependencies {
-    compileOnly 'org.projectlombok:lombok:1.18.28'
+    // lombok:annotationProcessor + compileOnly or use plugin
+    //    annotationProcessor 'org.projectlombok:lombok:1.18.28'
+    //    compileOnly 'org.projectlombok:lombok:1.18.28'
+
+    // bean validation: constraints
     implementation 'jakarta.validation:jakarta.validation-api:3.0.2'
+    // bean validation: tester les contraintes
+    testImplementation 'org.hibernate.validator:hibernate-validator:8.0.1.Final'
+
+    // JUNIT:
     // use same version for all org.junit dependencies (BOM = Bill of Material)
     testImplementation platform('org.junit:junit-bom:5.9.3')
     testImplementation 'org.junit.jupiter:junit-jupiter'
