@@ -1,0 +1,3 @@
+# datasource configuration with JNDI
+datasource.jndi=java:/movieDS
+datasource.provider=jndi

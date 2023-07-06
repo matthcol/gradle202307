@@ -1,0 +1,8 @@
+# -----------------------------------------------------
+# datasource configuration for mariadb
+datasource.url=jdbc:mariadb://localhost/dbmovie
+datasource.provider=mariadb
+# -----------------------------------------------------
+# user credentials
+datasource.user=movie
+datasource.password=password

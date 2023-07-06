@@ -1,0 +1,9 @@
+To setup this project with a mariadb (1), postgresql (2)  or external JNDI datasource configuration (3):
+./setup.sh maria
+./setup.sh pg
+./setup.sh jndi
+
+The 3 sample configurations are in directory conf/
+You can edit or add one.
+Better use JNDI datasource configuration file in your Java application server
+

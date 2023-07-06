@@ -9,6 +9,10 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class MovieTest {
@@ -66,7 +70,6 @@ class MovieTest {
                 .build();
         var constraintViolations = validator.validate(movie);
         assertEquals(1, constraintViolations.size(), "title not blank");
-        System.out.println(constraintViolations.stream().findFirst().get());
     }
 
     @ParameterizedTest
@@ -80,6 +83,16 @@ class MovieTest {
                 .build();
         var constraintViolations = validator.validate(movie);
         assertEquals(1, constraintViolations.size(), "yeat min 1888");
+    }
 
+    @Test
+    void featureJava11(){
+        var titles = List.of("John Wick 4", "The Whale");
+        var titleSet = Set.of("John Wick 4", "The Whale");
+        var indexTitleYear = Map.of(
+                "John Wick 2", 2017,
+                "John Wick 4", 2023,
+                "The Whale", 2023
+        );
     }
 }

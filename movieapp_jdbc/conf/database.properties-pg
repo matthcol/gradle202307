@@ -1,0 +1,7 @@
+# datasource configuration for postgresql
+datasource.url=jdbc:postgresql://localhost/dbmovie
+datasource.provider=postgresql
+# -----------------------------------------------------
+# user credentials
+datasource.user=movie
+datasource.password=password

@@ -13,6 +13,7 @@ repositories {
     mavenCentral()
 }
 
+// https://docs.gradle.org/current/userguide/declaring_dependencies.html#sec:dependency-types
 dependencies {
     // lombok:annotationProcessor + compileOnly or use plugin
     //    annotationProcessor 'org.projectlombok:lombok:1.18.28'
@@ -20,8 +21,17 @@ dependencies {
 
     // bean validation: constraints
     implementation 'jakarta.validation:jakarta.validation-api:3.0.2'
-    // bean validation: tester les contraintes
+    // bean validation: testing constraints (compilation)
     testImplementation 'org.hibernate.validator:hibernate-validator:8.0.1.Final'
+    // bean validation: testing constraints (runtime): need EL
+    // NB [syntax] with or without parenthesis:
+    testRuntimeOnly('org.glassfish.expressly:expressly:5.0.0')
+    // testRuntimeOnly 'org.glassfish.expressly:expressly:5.0.0'
+    // NB [syntax] with or without square brackets:
+    // testRuntimeOnly group: 'org.glassfish.expressly', name: 'expressly', version: '5.0.0'
+    // testRuntimeOnly(
+    //    [group: 'org.glassfish.expressly', name: 'expressly', version: '5.0.0']
+    // )
 
     // JUNIT:
     // use same version for all org.junit dependencies (BOM = Bill of Material)
@@ -36,5 +46,28 @@ test {
     // if you want to keep logs on stdout/sterr for all tests (default: failed)
     testLogging {
         events "passed", "skipped", "failed"
+    }
+}
+
+// Specify Java Version
+// https://docs.gradle.org/current/userguide/building_java_projects.html#sec:java_cross_compilation
+// https://docs.gradle.org/current/userguide/toolchains.html#toolchains
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(11)
+        // vendor = JvmVendorSpec.matching("oracle")
+    }
+}
+
+// available since Java 10
+//compileJava {
+//    options.release = 17
+//}
+
+jar {
+    manifest {
+        attributes(
+                "Main-Class": "org.example.Main"
+        )
     }
 }
