@@ -5,6 +5,9 @@ import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -52,9 +55,10 @@ class MovieTest {
         );
     }
 
-    @Test
-    void testTitleNotValid() {
-        String title = "";
+    @ParameterizedTest
+    @NullSource
+    @ValueSource(strings = {"", " ", "\t", "\r", "\n", "\f", " \t \r\n"})
+    void testTitleNotValid(String title) {
         short year = 2017;
         var movie = Movie.builder()
                 .title(title)
@@ -62,10 +66,20 @@ class MovieTest {
                 .build();
         var constraintViolations = validator.validate(movie);
         assertEquals(1, constraintViolations.size(), "title not blank");
+        System.out.println(constraintViolations.stream().findFirst().get());
     }
 
-    @Test
-    void testYearNotValid() {
+    @ParameterizedTest
+    @ValueSource(ints = {0, 1887})
+    void testYearNotValid(int intYear) {
+        String title = "John Wick 2";
+        short year = (short) intYear;
+        var movie = Movie.builder()
+                .title(title)
+                .year(year)
+                .build();
+        var constraintViolations = validator.validate(movie);
+        assertEquals(1, constraintViolations.size(), "yeat min 1888");
 
     }
 }
