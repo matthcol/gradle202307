@@ -107,8 +107,29 @@ tasks.register('summary'){
     }
 }
 
-
+tasks.register('theEnd'){
+    doLast() {
+        logger.lifecycle("This is the end")
+    }
+}
 
 postJar.configure {
     mustRunAfter 'jar'
+}
+
+summary.configure {
+    finalizedBy theEnd
+}
+
+// task to create archive dir if not exists
+
+tasks.register('archiveJar', Copy){
+    // TODO: use wildcard *, ant wildcard **
+    dependsOn('jar')
+    from(
+            project.layout.buildDirectory.file("libs/hello-0.1.jar"),
+            // reports
+    )
+    // another from
+    into(project.layout.projectDirectory.dir("archive"))
 }
