@@ -1,3 +1,5 @@
+import java.nio.file.Files
+
 plugins {
     // https://docs.gradle.org/current/userguide/java_plugin.html
     //    id 'java'
@@ -122,14 +124,29 @@ summary.configure {
 }
 
 // task to create archive dir if not exists
+tasks.register('ensureArchiveDirectory') {
+    // outputs.files = ...
+    // outputs.file(...)
+    // outputs.files(...)
+    outputs.dir(project.layout.projectDirectory.dir("archive"))
+    doLast {
+//        Files.createDirectories(archiveDir.toPath())
+        Files.createDirectories(outputs.files.singleFile)
+    }
+}
+
+// TODO: ZIP HTML reports
 
 tasks.register('archiveJar', Copy){
-    // TODO: use wildcard *, ant wildcard **
-    dependsOn('jar')
-    from(
-            project.layout.buildDirectory.file("libs/hello-0.1.jar"),
-            // reports
-    )
-    // another from
-    into(project.layout.projectDirectory.dir("archive"))
+    // dependsOn('jar')
+    dependsOn('test')
+    from jar
+    from (project.layout.buildDirectory.dir("test-results")) {
+        include "test/*.xml"
+    }
+
+    // destination
+    //    into(project.layout.projectDirectory.dir("archive"))
+    into(ensureArchiveDirectory.outputs.files.singleFile)
+
 }
