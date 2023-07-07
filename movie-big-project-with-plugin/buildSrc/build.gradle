@@ -1,0 +1,12 @@
+plugins {
+    id 'groovy-gradle-plugin'
+}
+
+repositories {
+    gradlePluginPortal() // so that external plugins can be resolved in dependencies section
+}
+
+dependencies {
+    // put the version here not in the script plugin
+    implementation 'io.freefair.gradle:lombok-plugin:8.1.0'
+}

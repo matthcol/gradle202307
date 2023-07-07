@@ -128,6 +128,7 @@ tasks.register('ensureArchiveDirectory') {
     // outputs.files = ...
     // outputs.file(...)
     // outputs.files(...)
+    destroyables.register()
     outputs.dir(project.layout.projectDirectory.dir("archive"))
     doLast {
 //        Files.createDirectories(archiveDir.toPath())
@@ -140,7 +141,7 @@ tasks.register('ensureArchiveDirectory') {
 tasks.register('archiveJar', Copy){
     // dependsOn('jar')
     dependsOn('test')
-    from jar
+    from jar // i.e. jar.outputs
     from (project.layout.buildDirectory.dir("test-results")) {
         include "test/*.xml"
     }
