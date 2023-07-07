@@ -1,0 +1,32 @@
+plugins {
+    id 'java'
+
+    // https://docs.gradle.org/current/userguide/war_plugin.html
+    id 'war'
+}
+
+group = 'net.learning64'
+version = '1.1'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly 'javax.servlet:javax.servlet-api:4.0.1'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(11)
+    }
+}
+
+compileJava.options.encoding = 'UTF-8'
+compileTestJava.options.encoding = 'UTF-8'
+javadoc.options.encoding = 'UTF-8'
+
+war {
+    // war properties: https://docs.gradle.org/current/dsl/org.gradle.api.tasks.bundling.War.html
+    archiveBaseName = 'bonjour'
+}

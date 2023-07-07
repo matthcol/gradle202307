@@ -1,6 +1,10 @@
 plugins {
     // https://docs.gradle.org/current/userguide/java_plugin.html
-    id 'java'
+    //    id 'java'
+
+    // https://docs.gradle.org/current/userguide/application_plugin.html
+    // superset of plugin java
+    id 'application'
 
     // https://plugins.gradle.org/plugin/io.freefair.lombok
     id "io.freefair.lombok" version "8.1.0"
@@ -70,4 +74,8 @@ jar {
                 "Main-Class": "org.example.Main"
         )
     }
+}
+
+application {
+    mainClass = "org.example.Main"
 }
